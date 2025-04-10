@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joshua Zahn - Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e0e0e0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header and Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px 20px;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-start; /* Left-aligned nav for desktop */
+    }
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    nav a {
+      color: #a3bffa;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #fff;
+    }
+    .hamburger {
+      display: none;
+      color: #a3bffa;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .nav-links {
+      display: flex;
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(163, 191, 250, 0.5);
+    }
+    h2 {
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: #a3bffa;
+    }
+    h3 {
+      font-size: 20px;
+      color: #81e6d9;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    p {
+      max-width: 800px;
+      font-size: 18px;
+      text-align: justify;
+    }
+
+    /* Hero Section */
+    #home {
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle, rgba(163, 191, 250, 0.2) 0%, transparent 70%);
+    }
+    #home a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #81e6d9;
+      color: #1a1a2e;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: transform 0.3s;
+    }
+    #home a:hover {
+      transform: scale(1.05);
+    }
+
+    /* Projects Section */
+    .projects-intro {
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 30px;
+      color: #a3bffa;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      max-width: 1200px;
+      width: 100%;
+    }
+    .project {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      cursor: pointer;
+    }
+    .project:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+    .project:hover::after {
+      content: attr(data-action);
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: #81e6d9;
+      color: #1a1a2e;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+    .project img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .project h3 {
+      margin: 15px 0;
+    }
+    .accordion-btn {
+      background: none;
+      border: none;
+      color: #a3bffa;
+      font-size: 16px;
+      padding: 10px;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.3s;
+    }
+    .accordion-btn:hover {
+      color: #fff;
+    }
+    .accordion-content {
+      padding: 0 10px 10px;
+      font-size: 14px;
+      display: none;
+    }
+    .accordion-content.active {
+      display: block;
+    }
+
+    /* About Section */
+    #about {
+      text-align: center;
+    }
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin: 0 auto 30px;
+      object-fit: cover;
+      border: 3px solid #81e6d9;
+    }
+    #about p {
+      margin: 0 auto;
+      text-align: justify;
+    }
+
+    /* Contact Icons */
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 30px;
+    }
+    .contact-icons a {
+      color: #a3bffa;
+      font-size: 32px;
+      transition: transform 0.3s, color 0.3s;
+    }
+    .contact-icons a:hover {
+      color: #81e6d9;
+      transform: scale(1.2);
+    }
+
+    /* Footer */
+   footer {
+      background: rgba(0, 0, 0, 0.7);
+      text-align: center; /* Centered alignment */
+      padding: 20px 0; /* Vertical padding only */
+      color: #a3bffa;
+      width: 100%; /* Ensure full width */
+    }
+    footer p {
+      padding: 0; /* Remove all padding */
+      margin: 0 auto; /* Center with auto margins */
+      width: fit-content; /* Make width fit the content */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        justify-content: center; /* Center for mobile */
+      }
+      .hamburger {
+        display: block;
+      }
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        transition: transform 0.3s;
+        transform: translateY(-150%);
+      }
+      .nav-links.active {
+        transform: translateY(0);
+      }
+      nav a {
+        margin: 10px 0;
+        padding: 10px;
+        display: block;
+      }
+      h1 {
+        font-size: 36px;
+      }
+      h2 {
+        font-size: 28px;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      footer {
+        text-align: center; /* Center for mobile */
+      }
+      footer p {
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="hamburger" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home">
+    <h1>Joshua Zahn</h1>
+    <p>Learning Experience Designer Specializing in Simulations and AI Training Content</p>
+    <a href="#projects">View Projects</a>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-intro">
+      <p><i class="fas fa-info-circle"></i> Click on any project to view or experience it.</p>
+    </div>
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <div class="project" data-action="Experience the Module" data-url="https://storage.googleapis.com/annoai_tutorial/AnnoAIModule/story.html">
+        <img src="images/annoiAI.png" alt="AI Training" />
+        <h3>AI Image Quality Interactive Training Module</h3>
+        <p>I created an interactive eLearning project for an AI Image Generation initiative to help AI content reviewers and data labeling specialists quickly master how to spot and select photorealistic images. Drawing on Cognitive Load Theory and experiential learning principles, as well as rapid prototyping and iterative design principles, I broke down complex, often-overlooked visual cues into concise modules and hands-on simulations. These modules provide realistic practice with immediate feedback, enabling content reviewers to transfer their learning to real labeling tasks quickly while maintaining high accuracy and consistency.</p>
+        <div class="accordion">
+          <button class="accordion-btn">Problem and Goals</button>
+          <p class="accordion-content">Our content reviewers and data labeling specialists struggled with identifying truly photorealistic images from AI-generated sets, leading to frequent errors and inconsistencies. We aimed to create a structured, interactive training solution that reduces confusion and disagreement. Ultimately, we wanted to help reviewers reach a 90% accuracy rate and consensus in image selection.</p>
+          
+          <button class="accordion-btn">Objectives</button>
+          <p class="accordion-content">Train and upskill content reviewers and data labeling specialists to effectively judge and select the most photorealistic images aligned with specific prompts. Equip them with a clear rubric and hands-on practice to boost confidence and consistency. Reduce onboarding time and increase tutor performance metrics.</p>
+          
+          <button class="accordion-btn">Stakeholders</button>
+          <p class="accordion-content">Key stakeholders included project managers, AI researchers, onboarding leads, and the remote reviewers themselves. Management needed reliable labeling data to refine the AI model. Researchers required more consistent image choices to improve system outputs.</p>
+          
+          <button class="accordion-btn">My Role</button>
+          <p class="accordion-content">I served as an instructional designer and developer. I scoped and designed the eLearning modules, wrote storyboards, and built interactive scenarios. I also collaborated with SMEs and project leads to ensure alignment with technical standards and project goals.</p>
+          
+          <button class="accordion-btn">Target Audience</button>
+          <p class="accordion-content">Remote content reviewers, both new hires and existing staff, who needed training on image realism and adherence to project guidelines. Their backgrounds ranged from tech-savvy to visual arts novices. The training was tailored to accommodate varying levels of experience and bandwidth constraints.</p>
+          
+          <button class="accordion-btn">Design</button>
+          <p class="accordion-content">I used a rapid, iterative approach to design concise, chunked content with simulations and quizzes that resemble actual labeling tasks. Visual examples and guided practice helped tutors compare good vs. poor image selections. Feedback loops and scenario-based learning were central to reinforcing best practices.</p>
+          
+          <button class="accordion-btn">Tools</button>
+          <p class="accordion-content">I built and published the interactive course in Articulate Storyline. Camtasia was used for quick screencasts. OpenAI Playground and Google Cloud supported the AI model examples and data storage.</p>
+          
+          <button class="accordion-btn">Deliverables</button>
+          <p class="accordion-content">An interactive eLearning module with simulations and scenario-based quizzes. A concise rubric and reference guide summarizing selection criteria. Ongoing updates and refinements to the module, ensuring alignment with the AI researchers’ evolving standards.</p>
+          
+          <button class="accordion-btn">Reflection</button>
+          <p class="accordion-content">Initially, I was told that instructional design couldn’t work in such a fast-moving, ambiguous environment, where labeling criteria evolved weekly and project goals shifted constantly. By applying an iterative, agile approach, I created a flexible module that mirrored the real UI for realistic practice and instant feedback, proving it can be done and done well. This design also simplified collecting learner data, identifying performance pain points, and delivering targeted follow-ups to those who needed extra support, ultimately making the training both faster and smarter. Overall, this eLearning approach proved more engaging and effective than lengthy manuals or webinars, driving faster learner proficiency.</p>
+        </div>
+      </div>
+      
+      <!-- Project 2 -->
+       <div class="project" data-action="View Project" data-url="https://storage.googleapis.com/rp_vid/content/index.html">
+        <img src="images/video.png" alt="Rapid Prototyping" />
+        <h3>Visual Metaphor for Rapid Prototyping</h3>
+        <p>I created a short instructional video explaining Tripp and Bichelmeyer’s Rapid Prototyping model using a wedding cake analogy to illustrate the iterative design process. I storyboarded the concept in Google Docs, designed slides in Google Slides, recorded and edited in Camtasia, and published the final .mp4 through Articulate Rise.</p>
+        <div class="accordion">
+          <button class="accordion-btn">Problem and Goals</button>
+          <p class="accordion-content">I needed to help novice instructional designers understand how iterative feedback loops accelerate development. The goal was to make a concise, visually engaging presentation that connects Rapid Prototyping to a relatable everyday scenario.</p>
+          
+          <button class="accordion-btn">Objectives</button>
+          <p class="accordion-content">Explain the core steps of Rapid Prototyping, highlight the importance of user feedback, and show how a simple analogy (baking a wedding cake) mirrors the iterative process.</p>
+          
+          <button class="accordion-btn">Stakeholders</button>
+          <p class="accordion-content">Graduate students, instructional designers, and trainers seeking clear, hands-on insight into iterative instructional design strategies.</p>
+          
+          <button class="accordion-btn">My Role</button>
+          <p class="accordion-content">I researched the model, developed the visual metaphor and storyboard, recorded the narration, and produced the video from concept to completion.</p>
+          
+          <button class="accordion-btn">Target Audience</button>
+          <p class="accordion-content">Novice instructional designers or anyone interested in learning a flexible, user-centered approach to creating instructional materials.</p>
+          
+          <button class="accordion-btn">Design</button>
+          <p class="accordion-content">A straightforward four-slide structure with bold visuals and a baking metaphor to keep the focus on iterative cycles and real-world application.</p>
+          
+          <button class="accordion-btn">Tools</button>
+          <p class="accordion-content">Camtasia for screen recording and editing, Google Docs for script and planning, Google Slides for designing visuals, and Articulate Rise for final delivery.</p>
+          
+          <button class="accordion-btn">Deliverables</button>
+          <p class="accordion-content">A short .mp4 video with voiceover narration and a visual metaphor planning guide demonstrating the Rapid Prototyping steps.</p>
+          
+          <button class="accordion-btn">Reflection</button>
+          <p class="accordion-content">Through this project, I learned how powerful a tangible metaphor can be in clarifying complex models, and I reinforced the value of quick iteration and feedback in crafting effective instructional solutions.</p>
+        </div>
+      </div>
+      
+      <!-- Project 3 -->
+      <div class="project" data-action="View Project" data-url="https://www.canva.com/design/DAGHZpwhy-g/kBuFj2xWyxzlR6RnD0j0Mg/view?utm_content=DAGHZpwhy-g&utm_campaign=designshare&utm_medium=link&utm_source=editor">
+        <img src="images/presentation.png" alt="Case Study" />
+        <h3>VR Module Needs Assessment and Case Study (in French)</h3>
+        <p>I developed a needs assessment and case study for a French immersive learning platform (Uptale). After analyzing the existing module’s learner engagement, objectives, and performance gaps, I crafted clear recommendations and delivered a live Zoom presentation showcasing how improved navigation, interactivity, gamification, immersive storytelling, and structured feedback could boost training effectiveness. The presentation highlights key design elements referenced in my assessment.</p>
+        <div class="accordion">
+          <button class="accordion-btn">Problem and Goals</button>
+          <p class="accordion-content">The training lacked clear objectives, cohesive navigation, and consistent interactivity, so my aim was to propose practical improvements that increased learner motivation and ensured measurable safety compliance.</p>
+          
+          <button class="accordion-btn">Objectives</button>
+          <p class="accordion-content">Streamline user experience, clarify learning outcomes, and integrate gamification and scenario-based elements that help learners apply safety rules, identify risks, and respond effectively to incidents.</p>
+          
+          <button class="accordion-btn">Stakeholders</button>
+          <p class="accordion-content">Uptale’s commercial and production managers, along with MBI’s training lead, each invested in seeing higher engagement and clearer ROI for VR safety training.</p>
+          
+          <button class="accordion-btn">My Role</button>
+          <p class="accordion-content">I served as the Instructional Designer and consultant, conducting a needs assessment, devising evidence-based improvements, and presenting the solution roadmap via Zoom.</p>
+          
+          <button class="accordion-btn">Target Audience</button>
+          <p class="accordion-content">The L&D team at MBI (who initially created the VR module) and Uptale’s in-house team, both needing a refined approach to enhance training effectiveness and demonstrate the platform’s full potential.</p>
+          
+          <button class="accordion-btn">Design</button>
+          <p class="accordion-content">Proposed modular scenes with explicit learning goals, interactive branching scenarios for risk identification, gamification elements, consistent feedback loops, and easy navigation (including “back” buttons and progress indicators).</p>
+          
+          <button class="accordion-btn">Tools</button>
+          <p class="accordion-content">Primarily used Canva for the visual presentation and Uptale Immersive Learning Platform to demonstrate VR module prototypes and proposed enhancements.</p>
+          
+          <button class="accordion-btn">Deliverables</button>
+          <p class="accordion-content">A concise live presentation (with supporting slides and visuals) detailing user experience issues, targeted solutions, and an implementation plan to maximize training efficiency and retention.</p>
+          
+          <button class="accordion-btn">Reflection</button>
+          <p class="accordion-content">This project underscored the importance of blending immersive technology with solid instructional design principles. By aligning clear objectives, intuitive navigation, and constructive feedback, I saw how quickly VR training can transform from a novelty to a highly effective learning tool.</p>
+        </div>
+      </div>
+      
+      <!-- Project 4 -->
+      <div class="project" data-action="View Project" data-url="https://docs.google.com/spreadsheets/d/14si1NDilrMGiaKi35LFX7dITLsBTJ-EsQBYQlOzVovU/edit?usp=sharing">
+        <img src="images/gsheet.png" alt="ADDIE Outline" />
+        <h3>ADDIE Outline for Efficiency Training</h3>
+        <p>I developed this interactive Google Sheets-based ADDIE project as a sample to demonstrate how to organize and streamline a hypothetical L&D initiative for Tesla’s battery module assembly line. Although I did not work at Tesla, I created the scenario, filled in an example lesson, and provided it to a Tesla Instructional Design Lead for review, who offered positive feedback on its clarity and collaborative potential.</p>
+        <div class="accordion">
+          <button class="accordion-btn">Problem and Goals</button>
+          <p class="accordion-content">Address a perceived gap in quality checks during battery module assembly and enhance production efficiency.</p>
+          
+          <button class="accordion-btn">Objectives</button>
+          <p class="accordion-content">Provide a structured, data-driven process for training improvements and offer a clear blueprint for evaluation.</p>
+          
+          <button class="accordion-btn">Stakeholders</button>
+          <p class="accordion-content">L&D teams, shift supervisors, floor operators, and any collaborators needing real-time progress updates.</p>
+          
+          <button class="accordion-btn">My Role</button>
+          <p class="accordion-content">I conceived the scenario, designed the Google Sheet layout, and constructed the entire example lesson as an ADDIE roadmap.</p>
+          
+          <button class="accordion-btn">Target Audience</button>
+          <p class="accordion-content">L&D professionals and managers looking for a cohesive method to track training initiatives and foster collaboration.</p>
+          
+          <button class="accordion-btn">Design</button>
+          <p class="accordion-content">A live visual document in Google Sheets showcasing each ADDIE phase (Analysis, Design, Development, Implementation, Evaluation).</p>
+          
+          <button class="accordion-btn">Tools</button>
+          <p class="accordion-content">Google Sheets</p>
+          
+          <button class="accordion-btn">Deliverables</button>
+          <p class="accordion-content">Completed sample training outline, milestone tracking, stakeholder mapping, and built-in collaboration features.</p>
+          
+          <button class="accordion-btn">Reflection</button>
+          <p class="accordion-content">Demonstrating the ADDIE model in a practical, user-friendly format helped clarify process steps, promote transparency, and earn constructive feedback from industry professionals.</p>
+        </div>
+      </div>
+     
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About</h2>
+    <img src="images/profile.png" alt="Joshua Zahn" class="profile-image" />
+    <p>I’m Josh, a Learning Experience Designer and AI Training & Annotation SME. I'm passionate about crafting impactful learning experiences that bridge performance and skills gaps in organizations by blending immersive storytelling, technology, and real-world problem-solving. Drawing on my background as an educator, curriculum developer, and corporate training specialist, I create simulation-based solutions that drive measurable performance outcomes and engage diverse audiences. I’m currently pursuing an MA in Instructional Design & Technology (with a focus on simulations) at the University of Central Florida, fueling my passion for transformative, results-oriented learning experiences. When I’m not working, you’ll find me cycling, cooking, or learning a new language. Let’s connect to explore how I can elevate your team’s learning initiatives!</p>
+    
+    <div class="contact-icons">
+      <a href="https://www.linkedin.com/in/josh-z-25b40a2aa/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="tel:+15614756022" title="Call me"><i class="fas fa-phone"></i></a>
+      <a href="mailto:zahn.joshua47@gmail.com" title="Email me"><i class="fas fa-envelope"></i></a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Joshua Zahn. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // DOM elements
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.querySelector('.nav-links');
+    const accordionButtons = document.querySelectorAll('.accordion-btn');
+    const projects = document.querySelectorAll('.project');
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    
+    // Toggle mobile navigation
+    function toggleNav() {
+      navLinks.classList.toggle('active');
+    }
+    
+    // Add event listener with reference to the function
+    navToggle.addEventListener('click', toggleNav);
+    
+    // Accordion functionality with proper event handling
+    accordionButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.stopPropagation(); // Stop event from bubbling up to project
+        
+        const content = this.nextElementSibling;
+        const project = this.closest('.project');
+        const allContents = project.querySelectorAll('.accordion-content');
+        
+        // Close all other accordions in the same project
+        allContents.forEach(item => {
+          if (item !== content) {
+            item.classList.remove('active');
+          }
+        });
+        
+        // Toggle the clicked accordion
+        content.classList.toggle('active');
+      });
+    });
+    
+    // Make projects clickable with proper event delegation
+    projects.forEach(project => {
+      project.addEventListener('click', function(e) {
+        // Don't trigger if clicking on an accordion button or content
+        if (e.target.classList.contains('accordion-btn') || 
+            e.target.closest('.accordion-content') || 
+            e.target.closest('.accordion')) {
+          return;
+        }
+        
+        // Here you would add code to open the project
+  const url = this.getAttribute('data-url');
+    if (url) {
+      window.open(url, '_blank');
+    }
+  });
+});
+    
+    // Smooth scrolling for anchor links with proper event handling
+    anchorLinks.forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          // Using requestAnimationFrame for smoother performance
+          window.requestAnimationFrame(function() {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+          
+          // Close mobile menu when clicking a link
+          if (window.innerWidth <= 768) {
+            navLinks.classList.remove('active');
+          }
+        }
+      });
+    });
+    
+    // Performance optimization: Debounce scroll events
+    let isScrolling;
+    window.addEventListener('scroll', function() {
+      // Clear our timeout throughout the scroll
+      window.clearTimeout(isScrolling);
+      
+      // Set a timeout to run after scrolling ends
+      isScrolling = setTimeout(function() {
+        // Run code after scrolling ends
+        console.log('Scrolling has stopped');
+      }, 66);
+    }, { passive: true }); // Using passive for better scroll performance
+    
+    // Clean up resources if page is about to unload
+    window.addEventListener('beforeunload', function() {
+      // Remove event listeners to prevent memory leaks
+      navToggle.removeEventListener('click', toggleNav);
+      
+      accordionButtons.forEach(button => {
+        button.replaceWith(button.cloneNode(true)); // Quick way to remove all listeners
+      });
+      
+      projects.forEach(project => {
+        project.replaceWith(project.cloneNode(true));
+      });
+      
+      anchorLinks.forEach(anchor => {
+        anchor.replaceWith(anchor.cloneNode(true));
+      });
+    });
+  </script>
+</body>
+</html>
